@@ -1,0 +1,10 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+<div class="registrationForm  col-centered  " >
+
+<h2 class="text-center" >Resetting</h2>
+<div class="rowDivider" ></div>
+{% include "FOSUserBundle:Resetting:reset_content.html.twig" %}
+</div>
+{% endblock fos_user_content %}

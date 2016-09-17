@@ -1,0 +1,181 @@
+# EasyAdmin bundle Configuration
+
+easy_admin:
+    site_name: 'Dog Save The Queen Admin  Panel'
+    show:
+        max_results: 20
+    entities:
+
+        User:
+            class: AppBundle\Entity\User
+            disabled_actions: ['delete']
+            list:
+                title: "Most recent customers"
+                max_results: 30
+                fields: 
+                    - id
+                    - username
+                    - name
+                    - surname
+                    - email
+                    - telephone
+                    - activationDate
+                    - photos
+                    - { property: 'imageName', type: 'image', label: 'Avatar' ,  base_path: /images/profiles }
+                    - enabled
+                    - locked
+            form:
+                fields:
+                    - username
+                    - name
+                    - surname
+                    - telephone
+                    - email
+                    - enabled
+                    - roles
+                    - { property: 'imageFile', type: 'file', base_path: /images/profiles }
+                    - activationDate
+                    - { property: 'plainPassword', type: 'password', label: 'Password', help: 'Passwords must have at least 8 characters' }
+
+        contact:
+            class: AppBundle\Entity\contact
+
+        Dog:
+            class: AppBundle\Entity\Dog
+            list:
+                title: "Most recent dogs inserted"
+                max_results: 30
+                fields: 
+                    - id
+                    - name
+                    - sex
+                    - age
+                    - breeds
+                    - comment
+                    - insertDate
+                    - status
+                    - { property: 'imageName', type: 'image', label: 'Avatar' ,  base_path: /images/profiles }
+                    - userFK
+                    - photos
+            form:
+                fields:
+                  
+                    - name
+                    - sex
+                    - age
+                    - comment
+                    - insertDate
+                    - status
+                    - breeds
+                    - { property: 'imageFile', type: 'file',  base_path: /images/profiles }
+                    - userFK
+                    - photos
+
+        Photo: 
+            class: AppBundle\Entity\Photo
+            list:
+                title: "Most recent photos inserted"
+                max_results: 30
+                fields: 
+                    - id
+                    - dogs
+                    - status
+                    - user
+                    - { property: 'imageName', type: 'image', label: 'Picture' ,  base_path: /images/profiles }
+                    - description
+            form:
+                fields:
+                    - id
+                    - dogs
+                    - user
+                    - status
+                    - { property: 'imageFile', type: 'file', label: 'Picture' ,  base_path: /images/profiles }
+                    - description
+        Service:
+            class: AppBundle\Entity\Service
+            list:
+                title: "Services"
+                fields: 
+                    - id
+                    - name
+                    - status
+                    - price
+                    - duration
+                    - description
+                    
+            form:
+                fields:
+                    - id
+                    - name
+                    - status
+                    - price
+                    - duration
+                    - description
+
+        Status:
+            class: AppBundle\Entity\Status
+            list:
+                title: "Status"
+                fields: 
+                    - id
+                    - active
+                    - description
+            form:
+                fields:
+                    - id
+                    - active
+                    - description
+        Comment:
+            class: AppBundle\Entity\Comment
+            list:
+                title: "Comments"
+                fields: 
+                    - id
+                    - status
+                    - description
+                    - commentDate
+                    - commentText
+            form:
+                fields:
+                    - id
+                    - status
+                    - description
+                    - commentDate
+                    - commentText
+        Booking:
+            class: AppBundle\Entity\Booking
+            list:
+                title: "Bookings"
+                fields: 
+                    - id
+                    - status
+                    - bookingDate
+                    - bookingTime
+                    - bookingComment
+            form:
+                fields:
+                    - id
+                    - status
+                    - bookingDate
+                    - bookingTime
+                    - bookingComment
+        Breed:
+            class: AppBundle\Entity\Breed
+            list:
+                title: "Breeds"
+                fields: 
+                    - id
+                    - breedName
+                    - breedDescription
+                    - dogs
+            form:
+                fields:
+                    - id
+                    - breedName
+                    - breedDescription
+                   
+              
+
+    design:
+        brand_color: '#2c3e50'
+        color_scheme: 'light'

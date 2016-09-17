@@ -1,0 +1,109 @@
+{% extends 'base_logged.html.twig' %}
+
+{% block nav %}
+
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+
+
+  <div class="container profileBooking ">
+    <div class="row">
+      <div class="col-lg-12">
+      <center>
+          <h2 class="name titleBlock text-center ">Booking</h2>
+           <button type="submit" class="btn btn-default bluButton buttonBlock text-center " data-toggle="modal" data-target="#ModalBookingInsert" >Add New</button>
+         </center>
+           <center><img  class="img-responsive text-center " src="{{ asset('img/bonesDark.png') }}"></center>
+             <div class="rowDivider" ></div>
+          </div>
+      </div>
+    </div>
+
+          <div class="row sectionBooking " >
+            <div class="col-lg-12">
+
+            <div class='' >
+            
+            <table class=" table table-responsive  " >
+            <tr class=" warning ">
+                <th>Date</th>
+                <th>Time</th>
+                <th>Service</th>
+                <th>Dog</th>
+                <th>Actions</th>
+            </tr>
+              {% for booking in bookings %}
+              <tr>
+                <td>{{booking.bookingDate|date("M / Dd / Y")}}</td>
+                <td>{{booking.bookingTime|date("H:i")}}</td>
+                <td>{{booking.service}}</td>
+                <td>{{booking.dogs}}</td>
+                <td> <a href="/profile/booking/edit/{{booking.id}}"><i class="fa fa-pencil fa-2x " aria-hidden="true"></i></a> 
+                 <a href="/profile/booking/delete/{{booking.id}}"><i class="fa fa-trash fa-2x " aria-hidden="true"></i></a>  </td>
+
+              </tr>
+              {% endfor %}
+            </table>
+            </div>
+
+     
+
+            </div>
+            </div>
+
+             {% if bookings is empty %}
+
+            <h1 class="text-center" ><span  class="green" >Add your bookings</span></h1>
+
+            {% endif %}
+
+<!-- Modal Photo Insert -->
+<div id="ModalBookingInsert" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+ <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add a Booking</h4>
+      </div>
+      <div class="modal-body">
+          <div class="input_width_modal" >
+
+           {{form_start(form)}}
+
+            {{ form_label(form.dogs) }}
+            {{ form_errors(form.dogs) }}
+            {{ form_widget(form.dogs) }}
+
+            {{ form_label(form.service) }}
+            {{ form_errors(form.service) }}
+            {{ form_widget(form.service) }}
+
+
+            {{ form_label(form.bookingDate) }}
+            {{ form_errors(form.bookingDate) }}
+            {{ form_widget(form.bookingDate,  {'attr': {'class': 'js-datepicker'}} ) }}
+
+
+            {{form_end(form)}}
+            
+       
+         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+{{ parent() }}
+
+{% endblock %}
