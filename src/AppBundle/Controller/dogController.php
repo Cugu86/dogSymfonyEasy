@@ -514,6 +514,7 @@ class dogController extends Controller
         $dog = new Dog();
 
         $user = $this->getUser();
+        $id= $user->getId();
        
         $form = $this->createForm(DogType::class, $dog);
         $form->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
@@ -555,11 +556,25 @@ class dogController extends Controller
         }
 
 
+
         $dogs=$user->getDogs();
+ 
+        $Ndog = count($dogs);
 
-       // $dogs = $this->getDoctrine()->getRepository('AppBundle:Dog')->findBy(array('userFK'=>$user));
+        dump($Ndog);
 
-        return $this->render('dog/profile.html.twig',array('formDog'=>$form->createView(), 'dogs'=>$dogs));
+        
+        
+
+        
+        //$em->createQueryBuilder('photos')
+         //           ->leftJoin('photos.dog', 'pd')
+          //          ->leftJoin('pd.userFK', 'u')
+           //         ->andWhere('pd.userFK = :id' )
+             //       ->setParameter('id', $id);
+
+
+        return $this->render('dog/profile.html.twig',array('formDog'=>$form->createView(), 'dogs'=>$dogs, 'Ndog'=> $Ndog));
     }
 
     /**
@@ -700,12 +715,14 @@ class dogController extends Controller
        dump($idUser);
 
 
+       
+
        $emDog = $this->getDoctrine()->getManager();
        $dogs = $emDog->getRepository('AppBundle:Dog')->findByUserFK($idUser);
        dump($dogs);
      
 
-       return $this->render('dog/other_profile.html.twig', array('user'=> $user , 'dogs'=> $dogs ));
+       return $this->render('dog/other_profile.html.twig', array('user'=> $user , 'dogs'=>$dogs ));
        
     }
 

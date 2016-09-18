@@ -42,7 +42,7 @@ class User extends BaseUser
         parent::__construct();
         $this->dogs = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->likes = new ArrayCollection();
+       
         $this->bookings = new ArrayCollection();
 
     }
@@ -67,10 +67,7 @@ class User extends BaseUser
     private $comments;
 
 
-    /**
-      * @ORM\OneToMany(targetEntity="Ilike", mappedBy="users")
-     */
-    private $likes;
+
 
 
 
@@ -386,39 +383,7 @@ class User extends BaseUser
         return $this->comments;
     }
 
-    /**
-     * Add like
-     *
-     * @param \AppBundle\Entity\Ilike $like
-     *
-     * @return User
-     */
-    public function addLike(\AppBundle\Entity\Ilike $like)
-    {
-        $this->likes[] = $like;
 
-        return $this;
-    }
-
-    /**
-     * Remove like
-     *
-     * @param \AppBundle\Entity\Ilike $like
-     */
-    public function removeLike(\AppBundle\Entity\Ilike $like)
-    {
-        $this->likes->removeElement($like);
-    }
-
-    /**
-     * Get likes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLikes()
-    {
-        return $this->likes;
-    }
 
     /**
      * Add booking

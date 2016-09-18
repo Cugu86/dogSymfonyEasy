@@ -53,10 +53,7 @@ class Photo
     private $comments;
 
 
-     /**
-      * @ORM\OneToMany(targetEntity="Ilike", mappedBy="photos")
-     */
-    private $likes;
+
 
         /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -291,4 +288,6 @@ class Photo
     {
         return $this->dog;
     }
+
+
 }

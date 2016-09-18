@@ -53,10 +53,7 @@ class Photo
     private $comments;
 
 
-     /**
-      * @ORM\OneToMany(targetEntity="Ilike", mappedBy="photos")
-     */
-    private $likes;
+
 
         /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -292,37 +289,5 @@ class Photo
         return $this->dog;
     }
 
-    /**
-     * Add like
-     *
-     * @param \AppBundle\Entity\Ilike $like
-     *
-     * @return Photo
-     */
-    public function addLike(\AppBundle\Entity\Ilike $like)
-    {
-        $this->likes[] = $like;
 
-        return $this;
-    }
-
-    /**
-     * Remove like
-     *
-     * @param \AppBundle\Entity\Ilike $like
-     */
-    public function removeLike(\AppBundle\Entity\Ilike $like)
-    {
-        $this->likes->removeElement($like);
-    }
-
-    /**
-     * Get likes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLikes()
-    {
-        return $this->likes;
-    }
 }
