@@ -12,7 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class BookingType extends AbstractType
 {
@@ -23,6 +24,9 @@ class BookingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+             ->add('service', EntityType::Class,  array(
+                    'class'=>'AppBundle:Service',
+                    'placeholder'=>'Chose a service'))
             ->add('bookingDate', DateType::class, array(
                     'placeholder' => 'Select a value',
                     'widget' => 'single_text',

@@ -34,77 +34,11 @@
 
     {% block nav %}
 
+
+
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header page-scroll">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{{ path('app_dog_index') }}">Dog Save The Queen</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="hidden">
-                            <a href="#page-top"></a>
-                        </li>
-                  
-                        {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
-
-                        <li class="page-scroll" >
-                          <a href="/profile/dashboard"><img src="{{ asset('img/home.png') }}"></a>
-                         </li>
-                        
-                         <li class="page-scroll" >
-                          <a href="/profile/booking"><img src="{{ asset('img/book.png') }}"></a>
-                         </li>
-                         <li class="page-scroll" >
-                          <a href="/profile/photos"><img src="{{ asset('img/photo.png') }}"></a>
-                         </li>
-
-                          <li class="page-scroll" >
-                          <a href="/profile"><div class='imgProfileMenu  ' style="background-image:url('{{asset('images/profiles/' ~ app.user.imageName)}}')" >
-            </div></a>
-                         </li>
-
-                         
-                         <li class="page-scroll">
-                            <a href="{{ path('fos_user_security_logout') }}" ><button type="submit" class="btn btn-success" >Logout</button></a>
-                        </li>
-
-                        {% else %}
-
-                          <li class="page-scroll">
-                            <a href="{{ path('fos_user_security_login') }}" ><button type="submit" class="btn btn-success" >Login</button></a>
-                        </li>
-                        <li class="page-scroll">
-                            <a href="{{ path('fos_user_registration_register') }}"  ><button type="submit" class="btn btn-success"  >Sign Up</button></a>
-                        </li>
-
-
-                        {% endif %}
-
-                        {% if is_granted('ROLE_ADMIN') %}
-
-                         <li class="page-scroll">
-                            <a href="/admin"  ><button type="submit" class="btn btn-success"  >Admin Panel</button></a>
-                        </li>
-
-                        {% endif %}
-                        
-                      
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container-fluid -->
-             {% for flashMessage in app.session.flashbag.get('noticeDog') %}
+            {% for flashMessage in app.session.flashbag.get('noticeDog') %}
 
                   <div class="alert alert-success">
                       {{ flashMessage }}
@@ -181,6 +115,83 @@
                   </div>
 
                   {% endfor %}
+
+                    {% for flashMessage in app.session.flashbag.get('noticeBookingEdit') %}
+
+                  <div class="alert alert-success">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ path('app_dog_index') }}">Dog Save The Queen</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden">
+                            <a href="#page-top"></a>
+                        </li>
+                  
+                        {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                        <li class="page-scroll" >
+                          <a href="/profile/dashboard"><img src="{{ asset('img/home.png') }}"></a>
+                         </li>
+                        
+                         <li class="page-scroll" >
+                          <a href="/profile/booking"><img src="{{ asset('img/book.png') }}"></a>
+                         </li>
+                         <li class="page-scroll" >
+                          <a href="/profile/photos"><img src="{{ asset('img/photo.png') }}"></a>
+                         </li>
+
+                          <li class="page-scroll" >
+                          <a href="/profile"><div class='imgProfileMenu  ' style="background-image:url('{{asset('images/profiles/' ~ app.user.imageName)}}')" >
+            </div></a>
+                         </li>
+
+                         
+                         <li class="page-scroll">
+                            <a href="{{ path('fos_user_security_logout') }}" ><button type="submit" class="btn btn-success" >Logout</button></a>
+                        </li>
+
+                        {% else %}
+
+                          <li class="page-scroll">
+                            <a href="{{ path('fos_user_security_login') }}" ><button type="submit" class="btn btn-success" >Login</button></a>
+                        </li>
+                        <li class="page-scroll">
+                            <a href="{{ path('fos_user_registration_register') }}"  ><button type="submit" class="btn btn-success"  >Sign Up</button></a>
+                        </li>
+
+
+                        {% endif %}
+
+                        {% if is_granted('ROLE_ADMIN') %}
+
+                         <li class="page-scroll">
+                            <a href="/admin"  ><button type="submit" class="btn btn-success"  >Admin Panel</button></a>
+                        </li>
+
+                        {% endif %}
+                        
+                      
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+
         </nav>
 
 

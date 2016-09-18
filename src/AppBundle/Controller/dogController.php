@@ -145,24 +145,54 @@ class dogController extends Controller
     public function bookingEditAction($id, Request $request)
     {
         
-        //render the contact request 
+        $user = $this->getUser();
+        $iduser= $user->getId();
+
+        $emDog= $this->getDoctrine()->getRepository('AppBundle:Dog');
+
         $em = $this->getDoctrine()->getManager();
         $booking = $em->getRepository('AppBundle:Booking')->find($id);
 
-        
         $form = $this->createForm(BookingType::class, $booking);
 
-        $form->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
+        $form ->add('dogs', EntityType::Class, array(
+                'class'=>'AppBundle:Dog',
+                'placeholder'=>'Chose a dog',
+                'query_builder'=> $emDog->createQueryBuilder('dogs')
+                                     ->leftJoin('dogs.userFK','du')
+                                     ->andWhere('du = :id' )
+                                     ->setParameter('id', $iduser)
+                    
+                ))
+
+             ->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $dog = $form['dog']->getData();
+            $dog = $form['dogs']->getData();
+            $date = $form['bookingDate']->getData();
+            $time = $form['bookingTime']->getData();
+            $service = $form['service']->getData();
 
-            $booking->setDog($dog);
+            $booking->setDogs($dog);
+            $booking->setBookingDate($date);
+            $booking->setBookingTime($time);
+            $booking->setService($service);
+
+            $em->flush();
+            $em->persist($booking);
+
+             $this->get('session')->getFlashBag()->add(
+                                            'noticeBookingEdit',
+                                            'Booking Edited!'
+                );
             
             return $this->redirectToRoute("booking");
         }
+
+         return $this->render('dog/edit_booking.html.twig',array('form'=>$form->createView() ) );
     }
 
 
@@ -214,9 +244,7 @@ class dogController extends Controller
                                      ->setParameter('id', $id)
                     
                 ))
-              ->add('service', EntityType::Class,  array(
-                    'class'=>'AppBundle:Service',
-                    'placeholder'=>'Chose a service'))
+             
               ->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
         $form->handleRequest($request);
 
@@ -652,6 +680,36 @@ class dogController extends Controller
     }
 
     /**
+     * @Route("/profile/{id}", name= "profile_others"  ) 
+     */
+
+    public function profile_othersAction($id)
+    {
+      
+       dump($id);  
+       $em = $this->getDoctrine()->getManager();
+       $user= $em->getRepository('AppBundle:User')->findByUsername($id);
+
+
+       dump($user);
+
+       $idUser =  $user[0];
+
+       $idUser= $idUser->getId();
+
+       dump($idUser);
+
+
+       $emDog = $this->getDoctrine()->getManager();
+       $dogs = $emDog->getRepository('AppBundle:Dog')->findByUserFK($idUser);
+       dump($dogs);
+     
+
+       return $this->render('dog/other_profile.html.twig', array('user'=> $user , 'dogs'=> $dogs ));
+       
+    }
+
+     /**
      * @Route("/profile/disable", name= "profile_disable"  ) 
      */
 

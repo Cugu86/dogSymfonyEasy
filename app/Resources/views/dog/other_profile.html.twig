@@ -1,0 +1,69 @@
+{% extends 'base_logged.html.twig' %}
+
+{% block nav %}
+
+{{ parent() }}
+
+{% endblock %}
+{% block body %}
+
+
+{% for user in user %}
+<div class="profileHeader" >
+  <div class="container containerProfileInfo " >
+    <h1 class="text-center pageTitle" >Profile {{user.username}}</h1>
+    <center><img  class="img-responsive text-center " src="{{ asset('img/bones.png') }}"></center>
+    <div class="rowDivider" ></div>
+    <div class="row otherProfiles  ">
+      <div class="col-sm-6 col-md-6 ">
+
+        <div class='imgProfilePage' style="background-image:url('{{asset('images/profiles/' ~ user.imageName)}}')" >
+        </div>
+
+      </div>
+      <div class="col-sm-6 col-md-6 text-left whiteText  ">
+
+        <p>{{ user.username | upper }}</p>
+
+        <p>{{ user.name | capitalize }} {{ user.surname | capitalize}}</p>
+
+
+      </div>
+
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+<div class="container" >
+
+
+  <h2 class="text-center" >Dogs</h2>
+  <div class="rowDivider" ></div>
+  <div class="row" >
+    <div class="col-md-12" >
+
+      <div class="grid">
+        {% for dog in dogs %}
+
+        <div class="grid-item">
+          <p class="whiteText" >Dog: {{ dog.name }} </p> 
+          <img  class="img-responsive img-rounded" width="300" height="300" src="{{ asset('images/profiles/' ~ dog.imageName) }}"> 
+        </div>
+
+        {% endfor  %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+
+{{ parent() }}
+
+{% endblock %}
