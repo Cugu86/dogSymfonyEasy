@@ -145,18 +145,18 @@
                         {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
 
                         <li class="page-scroll" >
-                          <a href="/profile/dashboard"><img src="{{ asset('img/home.png') }}"></a>
+                          <a href="{{path('dashboard')}}"><img src="{{ asset('img/home.png') }}"></a>
                          </li>
                         
                          <li class="page-scroll" >
-                          <a href="/profile/booking"><img src="{{ asset('img/book.png') }}"></a>
+                          <a href="{{path('booking')}}"><img src="{{ asset('img/book.png') }}"></a>
                          </li>
                          <li class="page-scroll" >
-                          <a href="/profile/photos"><img src="{{ asset('img/photo.png') }}"></a>
+                          <a href="{{path('photos')}}"><img src="{{ asset('img/photo.png') }}"></a>
                          </li>
 
                           <li class="page-scroll" >
-                          <a href="/profile"><div class='imgProfileMenu  ' style="background-image:url('{{asset('images/profiles/' ~ app.user.imageName)}}')" >
+                          <a href="{{ path('profile') }}"><div class='imgProfileMenu  ' style="background-image:url('{{asset('images/profiles/' ~ app.user.imageName)}}')" >
             </div></a>
                          </li>
 
@@ -180,7 +180,7 @@
                         {% if is_granted('ROLE_ADMIN') %}
 
                          <li class="page-scroll">
-                            <a href="/admin"  ><button type="submit" class="btn btn-success"  >Admin Panel</button></a>
+                            <a href='/admin'  ><button type="submit" class="btn btn-success"  >Admin Panel</button></a>
                         </li>
 
                         {% endif %}

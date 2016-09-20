@@ -52,6 +52,11 @@ class Photo
      */
     private $comments;
 
+         /**
+      * @ORM\OneToMany(targetEntity="miPiace", mappedBy="photos")
+     */
+    private $miPiace;
+
 
 
 
@@ -262,9 +267,6 @@ class Photo
     }
 
 
-
- 
-
     /**
      * Set dog
      *
@@ -290,4 +292,38 @@ class Photo
     }
 
 
+
+    /**
+     * Add miPiace
+     *
+     * @param \AppBundle\Entity\miPiace $miPiace
+     *
+     * @return Photo
+     */
+    public function addMiPiace(\AppBundle\Entity\miPiace $miPiace)
+    {
+        $this->miPiace[] = $miPiace;
+
+        return $this;
+    }
+
+    /**
+     * Remove miPiace
+     *
+     * @param \AppBundle\Entity\miPiace $miPiace
+     */
+    public function removeMiPiace(\AppBundle\Entity\miPiace $miPiace)
+    {
+        $this->miPiace->removeElement($miPiace);
+    }
+
+    /**
+     * Get miPiace
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMiPiace()
+    {
+        return $this->miPiace;
+    }
 }

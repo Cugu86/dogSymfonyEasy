@@ -28,6 +28,17 @@ class miPiace
      */
     private $miPiaceDate;
 
+         /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="miPiace")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $users;
+
+     /**
+     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="miPiace")
+     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
+     */
+    private $photos;
 
     /**
      * Get id
@@ -61,5 +72,53 @@ class miPiace
     public function getMiPiaceDate()
     {
         return $this->miPiaceDate;
+    }
+
+    /**
+     * Set users
+     *
+     * @param \AppBundle\Entity\User $users
+     *
+     * @return miPiace
+     */
+    public function setUsers(\AppBundle\Entity\User $users = null)
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * Get users
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Set photos
+     *
+     * @param \AppBundle\Entity\Photo $photos
+     *
+     * @return miPiace
+     */
+    public function setPhotos(\AppBundle\Entity\Photo $photos = null)
+    {
+        $this->photos = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \AppBundle\Entity\Photo
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }

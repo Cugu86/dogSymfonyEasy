@@ -558,21 +558,14 @@ class dogController extends Controller
 
 
         $dogs=$user->getDogs();
- 
-        $Ndog = count($dogs);
 
+        //counting number of dogs;
+        $Ndog = count($dogs);
         dump($Ndog);
 
         
-        
-
-        
-        //$em->createQueryBuilder('photos')
-         //           ->leftJoin('photos.dog', 'pd')
-          //          ->leftJoin('pd.userFK', 'u')
-           //         ->andWhere('pd.userFK = :id' )
-             //       ->setParameter('id', $id);
-
+        //counting number of photos
+   
 
         return $this->render('dog/profile.html.twig',array('formDog'=>$form->createView(), 'dogs'=>$dogs, 'Ndog'=> $Ndog));
     }

@@ -52,6 +52,11 @@ class Photo
      */
     private $comments;
 
+         /**
+      * @ORM\OneToMany(targetEntity="miPiace", mappedBy="photos")
+     */
+    private $miPiace;
+
 
 
 

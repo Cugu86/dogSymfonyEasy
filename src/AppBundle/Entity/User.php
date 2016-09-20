@@ -68,7 +68,10 @@ class User extends BaseUser
 
 
 
-
+    /**
+      * @ORM\OneToMany(targetEntity="miPiace", mappedBy="users")
+     */
+    private $miPiace;
 
 
     // ..... other fields
@@ -423,4 +426,38 @@ class User extends BaseUser
 
  
    
+
+    /**
+     * Add miPiace
+     *
+     * @param \AppBundle\Entity\miPiace $miPiace
+     *
+     * @return User
+     */
+    public function addMiPiace(\AppBundle\Entity\miPiace $miPiace)
+    {
+        $this->miPiace[] = $miPiace;
+
+        return $this;
+    }
+
+    /**
+     * Remove miPiace
+     *
+     * @param \AppBundle\Entity\miPiace $miPiace
+     */
+    public function removeMiPiace(\AppBundle\Entity\miPiace $miPiace)
+    {
+        $this->miPiace->removeElement($miPiace);
+    }
+
+    /**
+     * Get miPiace
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMiPiace()
+    {
+        return $this->miPiace;
+    }
 }

@@ -28,6 +28,17 @@ class miPiace
      */
     private $miPiaceDate;
 
+         /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="miPiace")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $users;
+
+     /**
+     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="miPiace")
+     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
+     */
+    private $photos;
 
     /**
      * Get id
@@ -63,4 +74,3 @@ class miPiace
         return $this->miPiaceDate;
     }
 }
-
