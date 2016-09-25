@@ -9,7 +9,42 @@
 
 
 
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+      {% for user in user %}
+          <h2 class="name">Profile {{ user}} </h2>
+           {% endfor %}
+            <center><img  class="img-responsive text-center " src="{{ asset('img/bones.png') }}"></center>
+    <div class="rowDivider" ></div>
+          <div class="row" >
+            <div class="col-lg-12">
+                     <div class="grid">
+           	
+                 {% for dog in dogs %}
 
+              <div class="grid-item">
+              
+              <div>
+               <p class="text-left" > Dog: {{dog.name | capitalize }} </p>
+            
+               </div>
+               <a href="/profile/dog/photos/{{dog.id}} ">
+               <img  class="img-responsive img-rounded" width="300" height="300" src="{{ asset('images/profiles/' ~ dog.imageName) }}"> 
+                </a>
+         
+               </div>
+  				  {% endfor %}
+            </div>
+      
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+   
+</header>
 
 
 

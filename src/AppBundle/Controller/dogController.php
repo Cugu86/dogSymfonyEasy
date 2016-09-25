@@ -299,7 +299,6 @@ class dogController extends Controller
         $em = $this->getDoctrine()->getRepository('AppBundle:Photo');
         $emDog= $this->getDoctrine()->getRepository('AppBundle:Dog');
 
-      //  $photos = $this->getDoctrine()->getRepository('AppBundle:Photo')->findByDog(array(1));
 
         $query = $em->createQueryBuilder('photos')
                     ->leftJoin('photos.dog', 'pd')
@@ -309,18 +308,6 @@ class dogController extends Controller
 
 
         $photos = $query->getQuery()->execute();
-
-        dump($photos);
-
-        $nPhoto = count($photos);
-
-
-        foreach ($photos as $photo) {
-             $nComment[] = count($photo->getComments());  
-        }
-
-        dump($nComment);
-
 
         $form = $this->createForm(PhotoType::class, $photo);
         
@@ -362,7 +349,7 @@ class dogController extends Controller
         }
 
 
-        return $this->render('dog/photos.html.twig', array('dogs'=>$dogs , 'nPhoto'=>$nPhoto,  'photos'=>$photos, 'nComment'=> $nComment , 'form'=>$form->createView()));
+        return $this->render('dog/photos.html.twig', array('dogs'=>$dogs ,  'photos'=>$photos,  'form'=>$form->createView()));
     }
 
 
@@ -570,11 +557,8 @@ class dogController extends Controller
 
         $dogs=$user->getDogs();
 
-        //counting number of dogs;
-        $Ndog = count($dogs);
-        dump($Ndog);
 
-        return $this->render('dog/profile.html.twig',array('formDog'=>$form->createView(), 'dogs'=>$dogs, 'Ndog'=> $Ndog));
+        return $this->render('dog/profile.html.twig',array('formDog'=>$form->createView(), 'dogs'=>$dogs));
     }
 
     /**
@@ -678,9 +662,9 @@ class dogController extends Controller
 
     public function dog_deleteAction($id)
     {
-        //render the contact request 
         $em = $this->getDoctrine()->getManager();
         $dog= $em->getRepository('AppBundle:Dog')->find($id);
+
 
         $em->remove($dog);
         $em->flush();
@@ -702,18 +686,13 @@ class dogController extends Controller
     public function profile_dogAction($id)
     {
         
-       $em = $this->getDoctrine()->getManager();
-       $dog= $em->getRepository('AppBundle:Dog')->findById($id);
+       $dog = $this->getDoctrine()->getRepository('AppBundle:Dog')->find($id);
         
+       dump($dog);
 
-
-       $emPhoto = $this->getDoctrine()->getManager();
-       $photos = $emPhoto->getRepository('AppBundle:Photo')->findById($id) ;
-
-       $nPhoto = count($photos);
-       
-     
-       return $this->render('dog/dog_photos.html.twig', [ 'dog'=>$dog, 'photos'=>$photos, 'nPhoto'=>$nPhoto ]);
+       $photos = $dog->getPhotos();
+    
+       return $this->render('dog/dog_photos.html.twig', [ 'dogs'=>$dog, 'photos'=>$photos ]);
        
     }
 
@@ -742,32 +721,30 @@ class dogController extends Controller
        
     }
 
+
      /**
-     * @Route("/profile/countPhotoDog/{id}", name= "countPhoto" ) 
+     * @Route("/profile/profilePage/{id}", name= "profilePage"  ) 
      */
 
-    public function countPhotoAction($id)
+    public function profilePageAction($id)
     {
         
-         //counting number of photos
+        $em = $this->getDoctrine()->getManager();
+        $user= $em->getRepository('AppBundle:User')->findByUsername($id);
 
-        $emPhoto = $this->getDoctrine()->getManager()->getRepository('AppBundle:Photo');
+        $idUser = $user[0]->getId();
 
-        $queryPhoto = $emPhoto->createQueryBuilder('Photo')
-                    ->leftJoin('Photo.dog', 'pd')
-                    ->andWhere('pd = :id ')
-                    ->setParameter('id',$id);
+        dump($user);
+        dump($idUser);
 
-        $resultat = $queryPhoto->getQuery()->execute();
+        $emDog = $this->getDoctrine()->getManager();
+        $dogs = $emDog->getRepository('AppBundle:Dog')->findByUserFK($user);
+        dump($dogs);
+   
 
-        $nPhoto = count($resultat);
-
-        dump($resultat);
-        dump($nPhoto);
-
-        //return $this->redirectToRoute("profile", array('nPhoto'=> $nPhoto ));
-        return $this->render('dog/countPhoto.html.twig', array('resultat'=> $resultat ));
-       
+        return $this->render('dog/other_profile.html.twig', ['user'=>$user, 'dogs'=>$dogs ]);
     }
+
+    
 
 }

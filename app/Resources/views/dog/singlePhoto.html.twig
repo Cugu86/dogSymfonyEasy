@@ -14,7 +14,7 @@
           
           <div class="photoSingle " >
            {% for photo in photo %}
-           <a class="titleBlock " href="/profile/{{photo.dog.userFK}}"> <div class='imgProfileMenu titleBlock  ' style="background-image:url('{{asset('images/profiles/' ~ photo.dog.userFK.imageName)}}')" > </div> </a>
+           <a class="titleBlock " href="/profile/profilePage/{{photo.dog.userFK}}"> <div class='imgProfileMenu titleBlock  ' style="background-image:url('{{asset('images/profiles/' ~ photo.dog.userFK.imageName)}}')" > </div> </a>
 
             <p class="titleBlock blue " >Description: {{photo.description}}  </p> 
            <img  class="img-responsive img-rounded" width="500" height="500" src="{{ asset('images/profiles/' ~ photo.imageName) }}"> 
@@ -41,7 +41,7 @@
       <div class="row" >
 
       <div class="col-lg-3 text-center centered "  >
-      <a  class="titleBlock" href=""> <div class='imgProfileMenu   ' style="background-image:url('{{asset('images/profiles/' ~ comment.users.imageName)}}')" ></div></a>
+      <a  class="titleBlock" href="/profile/profilePage/{{comment.users}}"> <div class='imgProfileMenu   ' style="background-image:url('{{asset('images/profiles/' ~ comment.users.imageName)}}')" ></div></a>
 
        <div class="bubble block blue  titleBlock ">
         <p>{{comment.commentText}} </p> 

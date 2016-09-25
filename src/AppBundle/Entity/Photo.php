@@ -28,7 +28,7 @@ class Photo
 
     /**
      * @ORM\ManyToOne(targetEntity="Dog", inversedBy="photos")
-     * @ORM\JoinColumn(name="dog_id", referencedColumnName="id" ,nullable=false)
+     * @ORM\JoinColumn(name="dog_id", referencedColumnName="id" ,nullable=false, onDelete="CASCADE")
      */
     private $dog;
 
