@@ -590,6 +590,10 @@ footer .footer-below {
     padding:30px;
  }
 
+  .commentDivider{
+    padding:10px;
+ }
+
  .notice{
     color: #18bc9c;
  }

@@ -123,6 +123,17 @@
                   </div>
 
                   {% endfor %}
+
+
+  
+
+                    {% for flashMessage in app.session.flashbag.get('noticeProfileDisabled') %}
+
+                  <div class="alert alert-warning">
+                      {{ flashMessage }}
+                  </div>
+
+                  {% endfor %}
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header page-scroll">
@@ -263,7 +274,7 @@
             <script src="https://unpkg.com/isotope-layout@3.0/dist/isotope.pkgd.min.js"></script>
             <script src="{{ asset('js/isotope.js') }}"></script>
 
-            <script src="{{ asset('js/datePicker.js') }}"></script>
+            <script src="{{ asset('js/like.js') }}"></script>
 
             <!-- Custom Theme JavaScript -->
             <script src="{{ asset('js/freelancer.js') }}"></script>

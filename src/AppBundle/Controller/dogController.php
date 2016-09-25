@@ -25,7 +25,6 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
@@ -313,6 +312,15 @@ class dogController extends Controller
 
         dump($photos);
 
+        $nPhoto = count($photos);
+
+
+        foreach ($photos as $photo) {
+             $nComment[] = count($photo->getComments());  
+        }
+
+        dump($nComment);
+
 
         $form = $this->createForm(PhotoType::class, $photo);
         
@@ -354,7 +362,7 @@ class dogController extends Controller
         }
 
 
-        return $this->render('dog/photos.html.twig', array('dogs'=>$dogs , 'photos'=>$photos, 'form'=>$form->createView()));
+        return $this->render('dog/photos.html.twig', array('dogs'=>$dogs , 'nPhoto'=>$nPhoto,  'photos'=>$photos, 'nComment'=> $nComment , 'form'=>$form->createView()));
     }
 
 
@@ -424,13 +432,17 @@ class dogController extends Controller
                 );
 
 
-            return $this->redirectToRoute('photos');
+            return $this->redirectToRoute('SinglePhotos', ['id'=> $id]);
 
          }
 
-          $comments = $this->getDoctrine()->getRepository('AppBundle:Comment')->findBy(['photos'=>$photo]);
+        $comments = $this->getDoctrine()->getRepository('AppBundle:Comment')->findBy(['photos'=>$photo]);
 
-        return $this->render('dog/singlePhoto.html.twig',array('form'=>$form->createView(), 'photo'=>$photo, 'comments'=>$comments));
+        $nComment = count($comments);
+
+        dump($nComment);
+
+        return $this->render('dog/singlePhoto.html.twig',array('form'=>$form->createView(), 'photo'=>$photo, 'comments'=>$comments , 'nComment'=> $nComment ));
     }
 
     
@@ -444,8 +456,9 @@ class dogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $comment = $em->getRepository('AppBundle:Comment')->find($id);
 
+        $photo = $comment->getPhotos();
 
-
+        $idPhoto = $photo->getId();
 
         $em->remove($comment);
         $em->flush();
@@ -455,7 +468,7 @@ class dogController extends Controller
                                             'Comment Deleted!'
                 );
 
-        return $this->redirectToRoute("photos");
+        return $this->redirectToRoute('SinglePhotos', ['id'=> $idPhoto]);
 
     }
 
@@ -481,12 +494,6 @@ class dogController extends Controller
 
             $comment->setCommentText($commentText);
 
-            //$comment->setCommentText($commentText);
-            //$comment->setUsers($user);
-            //$comment->setPhotos( $photoComment );
-            //$comment->setCommentDate(new \DateTime('now'));
-
-           
             $em->persist($comment);
             $em->flush();
 
@@ -495,8 +502,12 @@ class dogController extends Controller
                                             'Comment Edited!'
                 );
 
+             $photo = $comment->getPhotos();
 
-            return $this->redirectToRoute('photos');
+             $idPhoto = $photo->getId();
+
+
+            return $this->redirectToRoute('SinglePhotos', ['id'=>$idPhoto]);
 
          }
 
@@ -562,10 +573,6 @@ class dogController extends Controller
         //counting number of dogs;
         $Ndog = count($dogs);
         dump($Ndog);
-
-        
-        //counting number of photos
-   
 
         return $this->render('dog/profile.html.twig',array('formDog'=>$form->createView(), 'dogs'=>$dogs, 'Ndog'=> $Ndog));
     }
@@ -687,35 +694,26 @@ class dogController extends Controller
        
     }
 
+   
     /**
-     * @Route("/profile/{id}", name= "profile_others"  ) 
+     * @Route("/profile/dog/photos/{id}", name= "profile_dog"  ) 
      */
 
-    public function profile_othersAction($id)
+    public function profile_dogAction($id)
     {
-      
-       dump($id);  
+        
        $em = $this->getDoctrine()->getManager();
-       $user= $em->getRepository('AppBundle:User')->findByUsername($id);
+       $dog= $em->getRepository('AppBundle:Dog')->findById($id);
+        
 
 
-       dump($user);
+       $emPhoto = $this->getDoctrine()->getManager();
+       $photos = $emPhoto->getRepository('AppBundle:Photo')->findById($id) ;
 
-       $idUser =  $user[0];
-
-       $idUser= $idUser->getId();
-
-       dump($idUser);
-
-
+       $nPhoto = count($photos);
        
-
-       $emDog = $this->getDoctrine()->getManager();
-       $dogs = $emDog->getRepository('AppBundle:Dog')->findByUserFK($idUser);
-       dump($dogs);
      
-
-       return $this->render('dog/other_profile.html.twig', array('user'=> $user , 'dogs'=>$dogs ));
+       return $this->render('dog/dog_photos.html.twig', [ 'dog'=>$dog, 'photos'=>$photos, 'nPhoto'=>$nPhoto ]);
        
     }
 
@@ -726,13 +724,49 @@ class dogController extends Controller
     public function profile_disableAction()
     {
         
-        $this->getDoctrine()->getManager()->flush();
+        $user = $this->getUser();
+
+        $user->setLocked(true);
+        $user->setEnabled(false);
+
+        $userManager = $this->get('fos_user.user_manager');
+        $userManager->updateUser($user);
+
+
         $this->get('session')->getFlashBag()->add(
-                                            'noticeProfileDeleted',
-                                            'Profile Disabled!'
+                                            'noticeProfileDisabled',
+                                            'Profile Disabled, Please log out to enable the changes!'
                 );
 
         return $this->redirectToRoute("app_dog_index");
+       
+    }
+
+     /**
+     * @Route("/profile/countPhotoDog/{id}", name= "countPhoto" ) 
+     */
+
+    public function countPhotoAction($id)
+    {
+        
+         //counting number of photos
+
+        $emPhoto = $this->getDoctrine()->getManager()->getRepository('AppBundle:Photo');
+
+        $queryPhoto = $emPhoto->createQueryBuilder('Photo')
+                    ->leftJoin('Photo.dog', 'pd')
+                    ->andWhere('pd = :id ')
+                    ->setParameter('id',$id);
+
+        $resultat = $queryPhoto->getQuery()->execute();
+
+        $nPhoto = count($resultat);
+
+        dump($resultat);
+        dump($nPhoto);
+
+        //return $this->redirectToRoute("profile", array('nPhoto'=> $nPhoto ));
+        return $this->render('dog/countPhoto.html.twig', array('resultat'=> $resultat ));
        
     }
 

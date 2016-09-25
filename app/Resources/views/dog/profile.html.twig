@@ -81,7 +81,7 @@
       <p> <strong>Age:</strong>  {{dog.age}}</p>
       <p> <strong>Comment:</strong> {{dog.comment}}</p>
 
-      <p> <a href=""><strong> {{dog.name}} pictures </strong> </a> <span class="badge">58</span>  </p>
+      <p> <a href="/profile/dog/photos/{{dog.id}}"><strong> {{dog.name}} pictures <span class="badge">{{dog.photos | length }} </span> </strong> </a>  </p>
       </div>
     <br>
      </div>
@@ -160,8 +160,6 @@
     </div>
   </div>
 </div>
-
-
 
 {% endblock %}
 
