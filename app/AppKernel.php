@@ -21,7 +21,10 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new AppAdminBundle\AppAdminBundle()
+            new AppAdminBundle\AppAdminBundle(),
+            new Cocur\HumanDate\Bridge\Symfony\CocurHumanDateBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new FOS\RestBundle\FOSRestBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

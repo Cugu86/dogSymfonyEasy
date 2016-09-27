@@ -37,7 +37,7 @@
             </tr>
               {% for booking in bookings %}
               <tr>
-                <td>{{booking.bookingDate|date("M / Dd / Y")}}</td>
+                <td>{{booking.bookingDate|humanDate}}</td>
                 <td>{{booking.bookingTime|date("H:i")}}</td>
                 <td>{{booking.service}}</td>
                 <td>{{booking.dogs}}</td>

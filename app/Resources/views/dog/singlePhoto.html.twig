@@ -45,7 +45,7 @@
 
        <div class="bubble block blue  titleBlock ">
         <p>{{comment.commentText}} </p> 
-         {{comment.commentDate | date("m / d / y")}}
+         {{comment.commentDate | humanDate }}
          <a  href="/profile/photo/comment/delete/{{comment.id}}" class="red  " > <i class="fa fa-trash" aria-hidden="true"></i></a>
 
           <a href="/profile/photo/comment/edit/{{comment.id}}"    ><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -94,7 +94,16 @@
 </div>
 
 
+{% block javascripts %}
+
+{{parent()}}
+
+
 {% endblock %}
+
+{% endblock %}
+
+
 
 
 

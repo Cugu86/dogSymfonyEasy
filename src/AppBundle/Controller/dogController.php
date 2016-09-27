@@ -48,6 +48,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class dogController extends Controller
@@ -747,4 +749,33 @@ class dogController extends Controller
 
     
 
+    /**
+     * @Route("/profile/{id}/comment")
+     * @Method("GET")
+     */
+    public function getCommentAction($id)
+    {
+        $user = $this->getUser();
+       
+        $photo = $this->getDoctrine()->getRepository('AppBundle:Photo')->findById($id);
+
+        $comments = $this->getDoctrine()->getRepository('AppBundle:Comment')->findBy(['photos'=>$photo]);
+
+        $data = [
+            'comments' => $comments
+        ];
+
+        $serializer = $container->get('jms_serializer');
+        $serializer->serialize($data, $format);
+
+       dump($data); 
+        return new JsonResponse($data);
+    }
+
+
+
 }
+
+
+
+
