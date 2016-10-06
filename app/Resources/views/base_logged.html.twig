@@ -40,16 +40,22 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             {% for flashMessage in app.session.flashbag.get('noticeDog') %}
 
-                  <div class="alert alert-success">
+                  <div class="alert alert-warning">
                       {{ flashMessage }}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
 
                   {% endfor %}
 
                   {% for flashMessage in app.session.flashbag.get('noticeDogUpdate') %}
 
-                  <div class="alert alert-success">
+                  <div class="alert alert-warning">
                       {{ flashMessage }}
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
 
                   {% endfor %}
@@ -57,14 +63,20 @@
 
                   <div class="alert alert-danger">
                       {{ flashMessage }}
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
 
                   {% endfor %}
 
                    {% for flashMessage in app.session.flashbag.get('noticePhotoAdd') %}
 
-                  <div class="alert alert-success">
+                  <div class="alert alert-warning">
                       {{ flashMessage }}
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
 
                   {% endfor %}
@@ -73,28 +85,37 @@
 
                   <div class="alert alert-danger">
                       {{ flashMessage }}
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
 
                   {% endfor %}
                    {% for flashMessage in app.session.flashbag.get('noticeBookingAdd') %}
 
-                  <div class="alert alert-success">
+                  <div class="alert alert-warning">
                       {{ flashMessage }}
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
 
                   {% endfor %}
 
                   {% for flashMessage in app.session.flashbag.get('noticeCommentAdd') %}
 
-                  <div class="alert alert-success">
+                  <div class="alert alert-warning">
                       {{ flashMessage }}
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
 
                   {% endfor %}
 
                   {% for flashMessage in app.session.flashbag.get('noticeCommentEdit') %}
 
-                  <div class="alert alert-success">
+                  <div class="alert alert-warning">
                       {{ flashMessage }}
                   </div>
 
@@ -104,6 +125,9 @@
 
                   <div class="alert alert-danger">
                       {{ flashMessage }}
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
 
                   {% endfor %}
@@ -112,25 +136,45 @@
 
                   <div class="alert alert-danger">
                       {{ flashMessage }}
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
 
                   {% endfor %}
 
                     {% for flashMessage in app.session.flashbag.get('noticeBookingEdit') %}
 
-                  <div class="alert alert-success">
+                  <div class="alert alert-warning">
+
                       {{ flashMessage }}
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
 
                   {% endfor %}
 
 
-  
-
                     {% for flashMessage in app.session.flashbag.get('noticeProfileDisabled') %}
 
                   <div class="alert alert-warning">
                       {{ flashMessage }}
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+
+                  {% endfor %}
+
+
+                    {% for flashMessage in app.session.flashbag.get('noticeBookingSame') %}
+
+                  <div class="alert alert-danger">
+                      {{ flashMessage }}
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                      </button>
                   </div>
 
                   {% endfor %}

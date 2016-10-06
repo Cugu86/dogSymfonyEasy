@@ -228,6 +228,7 @@ class dogController extends Controller
     public function bookingAction(Request $request)
     {
         
+        $i= 0;
         $booking = new Booking();
 
         $user = $this->getUser();
@@ -249,12 +250,43 @@ class dogController extends Controller
               ->add('submit', SubmitType::Class, array('attr'=> array('class'=> 'btn btn-default bluInput','style'=> 'margin-bottom: 15px')));
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $dog = $form['dogs']->getData();
             $services = $form['service']->getData();
             $bookingTime = $form['bookingTime']->getData();
             $bookingDate = $form['bookingDate']->getData();
+
+
+            $bookingsSaved = $this->getDoctrine()->getRepository('AppBundle:Booking')->findAll(); 
+
+
+            foreach($bookingsSaved as $bookingS )  {
+
+                $date = $bookingS->getBookingDate();
+                $time = $bookingS->getBookingTime();
+
+                $interval = date_diff($time, $bookingTime);
+
+                if ( ($date == $bookingDate) && ($interval->h  == 0) && ($interval->i  <= 15)) {
+
+                    $i = $i+1; 
+                   
+                }
+            }
+            
+            if ($i >= 1) {
+
+                $this->get('session')->getFlashBag()->add(
+                'noticeBookingSame',
+                'My agenda is full
+                 Please choose another time!'
+                );
+
+                return $this->redirectToRoute("booking");
+                
+            }else{
 
             $booking->setDogs($dog);
             $booking->setService($services);
@@ -267,16 +299,20 @@ class dogController extends Controller
             $em->persist($booking);
             $em->flush();
 
-             $this->get('session')->getFlashBag()->add(
-                                            'noticeBookingAdd',
-                                            'Booking Added!'
+            $this->get('session')->getFlashBag()->add(
+                'noticeBookingAdd',
+                'Booking Added!'
                 );
 
 
-            return $this->redirectToRoute("booking");
+            return $this->redirectToRoute("booking", array('bookingDate'=>$bookingDate, 'bookingTime'=>$bookingTime));
+            }
+
+                   
+            
 
 
-        }
+    }
 
         $bookings = $this->getDoctrine()->getRepository('AppBundle:Booking')->findBy(['users'=>$user]);
 
