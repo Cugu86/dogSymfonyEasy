@@ -258,9 +258,18 @@ class dogController extends Controller
             $bookingTime = $form['bookingTime']->getData();
             $bookingDate = $form['bookingDate']->getData();
 
+            if ( ($bookingDate->format('D') == 'Mon') || ($bookingDate->format('D') == 'Sun')) {
+                
+                $this->get('session')->getFlashBag()->add(
+                'noticeBookingChiuso',
+                'Sunday and Monday we are closed!'
+                );
+
+                return $this->redirectToRoute("booking");
+
+            }
 
             $bookingsSaved = $this->getDoctrine()->getRepository('AppBundle:Booking')->findAll(); 
-
 
             foreach($bookingsSaved as $bookingS )  {
 
@@ -307,12 +316,7 @@ class dogController extends Controller
 
             return $this->redirectToRoute("booking", array('bookingDate'=>$bookingDate, 'bookingTime'=>$bookingTime));
             }
-
-                   
-            
-
-
-    }
+        }
 
         $bookings = $this->getDoctrine()->getRepository('AppBundle:Booking')->findBy(['users'=>$user]);
 
